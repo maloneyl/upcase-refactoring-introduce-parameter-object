@@ -4,29 +4,23 @@ class ShippingCalculator
   NORMAL_CONVERSION_FACTOR = 6.67
   NORMAL_RATE = 2.75
 
-  def calculate_cost(height, length, weight, width, express=nil)
-    volume = find_volume(height, length, width)
-
+  def calculate_cost(item, express=nil)
     if express
-      express_shipping(volume, weight)
+      express_shipping(item)
     else
-      normal_shipping(volume, weight)
+      normal_shipping(item)
     end
   end
 
   private
 
-  def find_volume(height, length, width)
-    height * length * width
-  end
-
-  def express_shipping(volume, weight)
-    cost = volume * (weight / EXPRESS_CONVERSION_FACTOR) * EXPRESS_RATE
+  def express_shipping(item)
+    cost = item.volume * (item.weight / EXPRESS_CONVERSION_FACTOR) * EXPRESS_RATE
     cost.round(2)
   end
 
-  def normal_shipping(volume, weight)
-    cost = volume * (weight / NORMAL_CONVERSION_FACTOR) * NORMAL_RATE
+  def normal_shipping(item)
+    cost = item.volume * (item.weight / NORMAL_CONVERSION_FACTOR) * NORMAL_RATE
     cost.round(2)
   end
 end
